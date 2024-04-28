@@ -1,25 +1,69 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import Home from './Routes/Home';
+import Navbar from './Components/Top/Navbar';
+import Statistics from './Routes/Statistics';
+import Matches from './Routes/Matches';
+import Login from './Routes/Login';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from "react-toastify";
+import { GetDataTournamentsReducer } from './Redux/Actions/Tournaments/Tournaments';
+import { ValidateUserReducer } from './Redux/Actions/Top/Top';
+import Positions from './Routes/Positions';
+import PositionsUsers from './Routes/PositionsUsers';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+	const dispatch = useDispatch()
+
+	const [ isAuth, setIsAuth ] = useState(false)
+	const location = useLocation();
+
+	const {
+        rex_data_user
+    } = useSelector(({top}) => top)
+
+	const getTournaments = async () => {
+		if (location.pathname !== '/login') {
+			const response = dispatch(ValidateUserReducer())
+			setIsAuth(response)
+		}
+		await dispatch(GetDataTournamentsReducer())
+	}
+
+	useEffect(()=>{
+		getTournaments()
+	},[])
+
+	return (
+		<>
+			{
+				!rex_data_user.usutoken
+				? <Routes>
+					<Route path="/login" element={<Login />} />
+				</Routes>
+				:	<>
+						<Navbar/>
+						<Routes>
+							<Route path="/home" element={<Home />} />
+							<Route path="/positions" element={<Positions />} />
+							<Route path="/statistics" element={<Statistics />} />
+							<Route path="/matches" element={<Matches />} />
+							<Route path="/users" element={<PositionsUsers />} />
+						</Routes>
+					</>
+
+			}
+			{/* <Navbar/> */}
+			{/* <Routes>
+				<Route path="/login" element={<Login />} />
+				<Route path="/home" element={<Home />} />
+				<Route path="/statistics" element={<Statistics />} />
+				<Route path="/matches" element={<Matches />} />
+			</Routes> */}
+			<ToastContainer />
+		</>
+	);
 }
 
 export default App;
