@@ -18,7 +18,7 @@ const Navbar = () => {
 
     return (
         <div onClick={()=> console.log(rex_data_user)} className={`Container-Navbar ${rex_data_user.tornombre}`}>
-            <div>La quinela</div>
+            <div>La quinela de la bondad</div>
             <Tooltip 
                 placement="rightBottom" 
                 title='Menu'

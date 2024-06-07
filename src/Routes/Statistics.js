@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetDataSelectionsReducer } from "../Redux/Actions/Selections/Selections";
 import './../Styles/Routes/Statistics.css'
-import { Row } from "antd";
+import { Typography } from "antd";
 import ModalLastMatches from "../Components/Statistics/ModalLastMatches";
 import { GetDataLastMatchesReducer } from "../Redux/Actions/Matches/Matches";
 
@@ -10,6 +10,8 @@ const Statistics = () => {
 
 	const dispatch = useDispatch()
 	const [ showModalMatches, setShowModalMatches ] = useState(false)
+
+	const { Title } = Typography
 
 	const {
         rex_data_selections,
@@ -34,7 +36,6 @@ const Statistics = () => {
 
 	return (
 		<div className="Statistics-Container">
-
 			{
 				rex_data_selections.length > 0
 				? <>

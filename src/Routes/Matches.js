@@ -1,4 +1,4 @@
-import { Col, Pagination, Row, Skeleton, Segmented, FloatButton } from 'antd'
+import { Col, Pagination, Row, Skeleton, Segmented, FloatButton, Divider } from 'antd'
 import React, { useEffect, useState } from 'react'
 import './../Styles/Routes/Matches.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,9 @@ import { GetDataMatchesReducer, ShowDateMatchReducer } from '../Redux/Actions/Ma
 import moment from 'moment';
 import { 
 	CalendarOutlined,
-	CloseOutlined
+	CloseOutlined,
+	LeftOutlined,
+	RightOutlined
 } from '@ant-design/icons';
 import ModalMatches from '../Components/Matches/ModalMatches';
 
@@ -55,10 +57,12 @@ const Matches = () => {
 			}
 			
 
-			<Row type="flex" justify="space-around" align="middle">
-				<Col sm={24} md={8}>
+			<Row style={{display:'flex', justifyContent:'center', padding:'0 10px'}}>
+				<Col span={24}>
 						<div className={`Title-Fixture Fixture-${rex_data_user.tornombre}`}>
+							<LeftOutlined />
 							<span>{rex_date_matches_em}</span>
+							<RightOutlined />
 						</div>
 						{
 							rex_data_matches.length > 0
@@ -71,35 +75,47 @@ const Matches = () => {
 											.filter(dam => rex_data_user.tornombre == "CA" ? dam.pargrupos?.grunombre == showGroup : true )
 											.map(par => {
 											return (
-												<Row className='Container-Match-Info' >
-													<Col span={24} style={{display:'flex', justifyContent:'center',alignItems:'center', fontSize:'11px'}}>{moment(par.parfecha).format('DD/MM/YYYY')}</Col>
-													<Col span={6} style={{display:'flex', justifyContent:'end', alignItems:'center'}}>
-														<div style={{display:'flex', alignItems:'center'}}>
-															{par.parlocalsel.selnombre}
-															<img
-																width={30}
-																height={30}															
-																src={par.parlocalsel.selimagen}
-															/>
-														</div>
-													</Col>
-													<Col span={6} style={{display:'flex', justifyContent:'center', columnGap:'8px'}}>
-														<div className={`Container-Result-Match ${rex_data_user.tornombre}`}>
-															{par.pargoleslocal} - {par.pargolesvisita}
-														</div>
-													</Col>
-													<Col span={6} style={{display:'flex', justifyContent:'initial', alignItems:'center'}}>
-														<div style={{display:'flex', alignItems:'center'}}>
-															<img
-																width={30}
-																height={30}
-																src={par.parvisitasel.selimagen}
-															/>
-															{par.parvisitasel.selnombre}
-															
-														</div>
-													</Col>
-												</Row>
+												<>
+													<Row>
+														<Col xs={6} sm={6} md={4} style={{display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', borderRight:'1px solid #ececec'}}>
+															<div>
+																{moment(par.parfecha).format('DD/MM/YY')}
+															</div>
+														</Col>
+														<Col xs={18} sm={18} md={20}>
+															<Row>
+																<Col xs={20} sm={20} md={20}>
+																	<div style={{width:'100%', padding:'0 20px'}}>
+																		<div style={{display:'flex', alignItems:'center'}}>
+																			<img
+																				width={30}
+																				height={30}
+																				src={par.parlocalsel.selimagen}
+																			/>
+																			<div>{par.parlocalsel.selnombre}</div>
+																		</div>
+																		<div style={{display:'flex', alignItems:'center'}}>
+																			<img
+																				width={30}
+																				height={30}
+																				src={par.parvisitasel.selimagen}
+																			/>
+																			<div>{par.parvisitasel.selnombre}</div>
+																		</div>
+																	</div>
+																</Col>
+																<Col xs={4} sm={4} md={4} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+																	<div>
+																		<div>{par.pargoleslocal != null ? par.pargoleslocal : '-'}</div>
+																		<div>{par.pargolesvisita != null ? par.pargolesvisita : '-'}</div>
+																	</div>
+																</Col>
+															</Row>
+														</Col>
+													</Row>
+													<Divider style={{margin:'15px 0'}}/>
+												</>
+												
 											)
 										})}
 									</div>

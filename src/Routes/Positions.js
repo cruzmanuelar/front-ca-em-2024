@@ -1,16 +1,23 @@
-import { Col, Row, Table, Segmented } from 'antd'
-import React from 'react'
+import { Col, Row, Table, Segmented, Popover } from 'antd'
+import React, { useEffect } from 'react'
 import './../Styles/Routes/Positions.css'
 import {
     PlusOutlined
 } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetPositionsTournamentReducer } from '../Redux/Actions/Tournaments/Tournaments';
 
 const Positions = () => {
 
     const {
         rex_data_user,
     } = useSelector(({top}) => top)
+
+    const {
+        rex_data_positions_tournament,
+    } = useSelector(({tournaments}) => tournaments)
+
+    const dispatch = useDispatch()
 
     const columns = [
         {
@@ -19,7 +26,7 @@ const Positions = () => {
             key: 'pos',
             align: 'center',
             render : (_, record, index) => {
-                return <>
+                return <div style={{display:'flex', justifyContent:'center'}}>
                     {
                         rex_data_user.tornombre == 'CA'
                         ? <div className={`Cell-Position ${index + 1 <= 2 ? 'Direct-Classification': ''}`}>
@@ -30,9 +37,10 @@ const Positions = () => {
                         </div>
                     }
 
-                </>
+                </div>
             },
-            width:'40px'
+            fixed : 'left',
+            width:'30px'
         },
         {
             title: '',
@@ -44,48 +52,55 @@ const Positions = () => {
                     <img
                         width={30}
                         height={30}
-                        src='https://res.cloudinary.com/josecruz9/image/upload/v1712374858/qsaornariwc7xab8qqxx.png'
+                        src={record.selimagen}
                     />
-                    <div>ARG</div>
+                    <div>{record.selnombre}</div>
                 </div>
             },
-            width:'80px'
+            fixed : 'left',
+            width:'70px'
         },
         {
             title: 'PJ',
             dataIndex: 'pj',
             key: 'pj',
-            align: 'center'
+            align: 'center',
+            width:'40px'
         },
         {
-            title: 'G:P',
+            title: 'G',
             dataIndex: 'pg',
             key: 'pg',
-            align: 'center'
+            align: 'center',
+            width:'40px'
         },  
+        {
+            title: 'P',
+            dataIndex: 'pe',
+            key: 'pe',
+            align: 'center',
+            width:'40px'
+        },
         {
             title: 'E',
             dataIndex: 'pe',
             key: 'pe',
-            align: 'center'
-        },
-        {
-            title: 'G',
-            dataIndex: 'goals',
-            key: 'goals',
-            align: 'center'
+            align: 'center',
+            width:'40px'
         },  
         {
             title: 'DG',
             dataIndex: 'dg',
             key: 'dg',
-            align: 'center'
+            align: 'center',
+            width:'40px'
         },
         {
             title: 'Ptos',
             dataIndex: 'ptos',
             key: 'ptos',
-            align: 'center'
+            align: 'center',
+            width:'40px'
         },
         {
             title: 'Forma',
@@ -94,155 +109,84 @@ const Positions = () => {
             align: 'center',
             render : (_, record, index) => {
                 return <div className='Container-Last-Games'>
-                    <div className='Game-Lost'>P</div>
-                    <div className='Game-Won'>G</div>
-                    <div className='Game-Draw'>E</div>
                     {
-                        rex_data_user.tornombre == 'CA'
-                        ? null
-                        : <div className='Icon-See-More'>
+                        record.nextMatch
+                        ?   <Popover
+                                content={
+                                    <div style={{display:'flex', gap:'10px', borderRadius:'10px'}}>
+                                        <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
+                                            <img 
+                                                height={15}
+                                                width={15}
+                                                src={record.nextMatch.parlocalsel.selimagen}
+                                            />
+                                            <span>{record.nextMatch.parlocalsel.selabreviacion}</span>
+                                            
+                                        </div>
+                                        <div><span> - </span></div>
+                                        <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
+                                            <img 
+                                                height={15}
+                                                width={15}
+                                                src={record.nextMatch.parvisitasel.selimagen}
+                                            />
+                                            <span>{record.nextMatch.parvisitasel.selabreviacion}</span>
+                                        </div>
+                                    </div>
+                                }
+                                title={null} 
+                                placement="leftBottom"
+                                trigger="click"
+                                className='Icon-See-More'
+                            >
                             <PlusOutlined style={{fontSize:'12px', color:'#FFFFFF'}} />
-                        </div>
+                        </Popover>
+                        : null
                     }
-                    
+                    {
+                        record.lastMatches.map(las => {
+                            const resultMatch = las.parganador == record.selid 
+                            ? 'Game-Won'
+                            : las.parganador == null
+                                ? 'Game-Draw'
+                                : 'Game-Lost'
+                            return <Popover 
+                                        content={<div style={{display:'flex', gap:'10px'}}>
+                                            <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
+                                                <img 
+                                                    height={15}
+                                                    width={15}
+                                                    src={las.parlocalsel.selimagen}
+                                                />
+                                                <span>{las.parlocalsel.selabreviacion}</span>
+                                                
+                                            </div>
+                                            <div><span>{las.pargoleslocal}</span> - <span>{las.pargolesvisita}</span></div>
+                                            <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
+                                                <img 
+                                                    height={15}
+                                                    width={15}
+                                                    src={las.parvisitasel.selimagen}
+                                                />
+                                                <span>{las.parvisitasel.selabreviacion}</span>
+                                            </div>
+                                        </div>} 
+                                        title={null} 
+                                        placement="leftBottom"
+                                        trigger="click"
+                                        > 
+                                <div className={`${resultMatch}`}>
+                                    {resultMatch == 'Game-Won' ? 'G' : resultMatch == 'Game-Draw' ? 'E' : 'P'}
+                                </div>
+                            </Popover>
+                        })
+                    }
                 </div>
             },
-            width:'100px'
+            width:'90px'
         },
     ];
 
-    const dataSourceEM = [
-        {
-            key: '1',
-            pos: 1,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '2',
-            pos: 2,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '3',
-            pos: 3,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '4',
-            pos: 4,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '5',
-            pos: 5,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '6',
-            pos: 6,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '7',
-            pos: 7,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '8',
-            pos: 8,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '9',
-            pos: 9,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-        {
-            key: '10',
-            pos: 10,
-            selnombre: 32,
-            pj: 3,
-            pg: 3,
-            pe: 3,
-            pp: 3,
-            goals: 3,
-            dg: 3,
-            ptos: 3,
-            forma: 3,
-        },
-    ];
 
     const dataSourceCA = [
         {
@@ -299,6 +243,14 @@ const Positions = () => {
         },
     ]
 
+    const getPositions = () => {
+        dispatch(GetPositionsTournamentReducer())
+    }
+
+    useEffect(()=> {
+        getPositions()
+    },[])
+
     return (
         <Row style={{display:'flex', alignItems:'center', justifyContent:'center', padding:'20px 10px'}}>
             <Col span={24} md={12}>
@@ -314,9 +266,12 @@ const Positions = () => {
                 <Table
                     className={`Table-Positions ${rex_data_user.tornombre == 'EM' ? 'Table-EM':''}`}
                     columns={columns}
-                    dataSource={rex_data_user.tornombre == 'CA' ? dataSourceCA : dataSourceEM }
+                    dataSource={rex_data_user.tornombre == 'CA' ? dataSourceCA : rex_data_positions_tournament }
                     pagination={{
                         position:['none','none']
+                    }}
+                    scroll={{
+                        x:300,
                     }}
                 />
                 {

@@ -1,5 +1,5 @@
 export default {
     // apiUrl : "https://quinela-bondad.onrender.com/api/"
-    apiUrl : "http://localhost:3001/"
+    apiUrl : "http://192.168.18.7:3001/"
 
 }

@@ -8,7 +8,6 @@
 }
 
 .Name-Card-Selection{
-    /* display: none; */
     position: absolute;
     display: flex;
     justify-content: center;
@@ -17,13 +16,18 @@
     color: black;
 }
 
+.Statistics-Title-Selection{
+    font-size: 20px;
+}
+
 .Card-Selection{
     cursor: pointer;
     border-radius: 15px;
     background-color: #5923211e;
     transition: 0.2s;
-    padding: 20px;
-    position: relative;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
 }
 
 .Card-Selection.EM{
@@ -32,10 +36,6 @@
 
 .Card-Selection.CA{
     border: 2px solid #0266E2;
-}
-
-.Card-Selection:hover{
-    border-radius: 35px;
 }
 
 .Card-Selection:hover img{
@@ -54,7 +54,4 @@
 .Card-Selection img{
     transition: 0.5s;
     display: block;
-}
-.Card-Selection:hover img{
-    transform: scale(1.2);
 }
