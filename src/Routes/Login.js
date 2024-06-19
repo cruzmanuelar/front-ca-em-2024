@@ -25,7 +25,7 @@ const Login = () => {
 	}
     const [ tournament, setTournament] = useState(null)
     const [ formLogin, setFormLogin] = useState({
-        tornid : null,
+        tornid : 1,
         usuusuario : null,
         usucontrasenia : null
     })
@@ -39,7 +39,7 @@ const Login = () => {
             console.log("Va a login reducer")
             const response = dispatch(AuthLoginReducer(formLogin))
             if(response){
-                navigate('/home')
+                navigate('/')
             }
         }
     }
@@ -71,12 +71,14 @@ const Login = () => {
                     <img
                         width={230}
                         height={240}
-                        src={tournament ? tournament : 'https://res.cloudinary.com/josecruz9/image/upload/v1712374907/tm3gidyzcpx3k2zlskev.png'}
+                        // src={tournament ? tournament : 'https://res.cloudinary.com/josecruz9/image/upload/v1712374907/tm3gidyzcpx3k2zlskev.png'}
+                        src='https://res.cloudinary.com/josecruz9/image/upload/v1712373465/zrkbejv5skotj8ciafpo.png'
                         alt='Icono torneo'
                     />
                 </div>
                 <div>
                 <Select
+                    value={1}
                     placeholder='Seleccionar torneo'
                     options={rex_data_tournaments}
                     onChange={(text, index)=> onChangeSelect(index)}

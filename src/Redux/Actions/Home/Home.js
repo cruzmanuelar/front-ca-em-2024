@@ -91,29 +91,30 @@ export const SendFormQuinelaReducer = ( ) => async (dispatch, getState) => {
 
     const dataEdited = rex_data_form_quinela.filter(dat => dat.edit == true)
 
-    await fetch(config.apiUrl + "quinela/edit-quinela",
-    {
-        mode: "cors",
-        method : "POST",
-        headers : {
-            "Accept": "application/json",
-            "Content-type":"application/json",
-            "usutoken" : localStorage.getItem('usutoken'),
+    console.log(dataEdited)
+    // await fetch(config.apiUrl + "quinela/edit-quinela",
+    // {
+    //     mode: "cors",
+    //     method : "POST",
+    //     headers : {
+    //         "Accept": "application/json",
+    //         "Content-type":"application/json",
+    //         "usutoken" : localStorage.getItem('usutoken'),
 
-        },
-        body : JSON.stringify({
-            formQuinela : dataEdited
-        })
-    },
-    )
-    .then( res => res.json())
-    .then(async data => {
-        if(data.response){
-            console.log("editado")
-            dispatch(GetDataNextMatchesReducer())
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-    })
+    //     },
+    //     body : JSON.stringify({
+    //         formQuinela : dataEdited
+    //     })
+    // },
+    // )
+    // .then( res => res.json())
+    // .then(async data => {
+    //     if(data.response){
+    //         console.log("editado")
+    //         dispatch(GetDataNextMatchesReducer())
+    //     }
+    // })
+    // .catch((error) => {
+    //     console.log(error)
+    // })
 }

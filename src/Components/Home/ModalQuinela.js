@@ -2,6 +2,7 @@ import { Modal, Input, Row, Col, Button } from 'antd'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { EditDataFormQuinelaReducer, SendFormQuinelaReducer, ShowModalFormQuinelaReducer } from '../../Redux/Actions/Home/Home'
+import './../../Styles/Components/Home/ModalQuinela.css'
 
 const ModalQuinela = () => {
 
@@ -27,6 +28,7 @@ const ModalQuinela = () => {
 			open={rex_show_modal_form_quinela}
 			footer={null}
 			onCancel={closeModal}
+			className='Modal-Form-Quinela'
 			// className={`Modal-Matches-Calendar ${rex_data_user?.tornombre}`}
 			// style={{display:'flex', flexWrap:'wrap', width:'100%'}}
 			closeIcon={false}
@@ -52,7 +54,7 @@ const ModalQuinela = () => {
 								width={30}
 								height={30}
 							/>
-							<div>{mat.parlocalsel.selnombre}</div>
+							<div style={{whiteSpace:'nowrap', textOverflow:'ellipsis', overflow:'hidden'}}>{mat.parlocalsel.selnombre}</div>
 						</Col>
 						<Col span={12} style={{display:'flex', alignItems:'center', gap:'10px'}}>
 							<Input 
@@ -71,7 +73,7 @@ const ModalQuinela = () => {
 								width={30}
 								src={mat.parvisitasel.selimagen}
 							/>
-							<div>{mat.parvisitasel.selnombre}</div>
+							<div style={{whiteSpace:'nowrap', textOverflow:'ellipsis', overflow:'hidden'}}>{mat.parvisitasel.selnombre}</div>
 						</Col>
 					</Row>
 				))

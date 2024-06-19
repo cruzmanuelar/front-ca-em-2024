@@ -48,7 +48,7 @@ const Matches = () => {
 				? 	<Row style={{display:'flex', alignItems:'center', justifyContent:'center', margin:'5px 0'}}>
 						<Col>
 							<Segmented
-								options={['Grupo A', 'Grupo B', 'Grupo C']}
+								options={['Grupo A', 'Grupo B', 'Grupo C', 'Grupo D']}
 								onChange={(value)=>{setShowGroup(value)}}
 							/>
 						</Col>
@@ -60,9 +60,9 @@ const Matches = () => {
 			<Row style={{display:'flex', justifyContent:'center', padding:'0 10px'}}>
 				<Col span={24}>
 						<div className={`Title-Fixture Fixture-${rex_data_user.tornombre}`}>
-							<LeftOutlined />
+							{/* <LeftOutlined /> */}
 							<span>{rex_date_matches_em}</span>
-							<RightOutlined />
+							{/* <RightOutlined /> */}
 						</div>
 						{
 							rex_data_matches.length > 0
@@ -73,10 +73,10 @@ const Matches = () => {
 									<div>
 										{mat.data
 											.filter(dam => rex_data_user.tornombre == "CA" ? dam.pargrupos?.grunombre == showGroup : true )
-											.map(par => {
+											.map((par, index) => {
 											return (
 												<>
-													<Row>
+													<Row style={{marginTop: index == 0 ? '20px': ''}}>
 														<Col xs={6} sm={6} md={4} style={{display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', borderRight:'1px solid #ececec'}}>
 															<div>
 																{moment(par.parfecha).format('DD/MM/YY')}
@@ -85,7 +85,7 @@ const Matches = () => {
 														<Col xs={18} sm={18} md={20}>
 															<Row>
 																<Col xs={20} sm={20} md={20}>
-																	<div style={{width:'100%', padding:'0 20px'}}>
+																	<div style={{width:'100%', padding:'0 20px', display:'flex',flexDirection:'column',gap:'5px'}}>
 																		<div style={{display:'flex', alignItems:'center'}}>
 																			<img
 																				width={30}

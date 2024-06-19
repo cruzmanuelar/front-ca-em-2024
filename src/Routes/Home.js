@@ -42,7 +42,7 @@ function Home() {
                             key={index}
                             style={{border : '1px solid #592321', borderRadius:'10px', marginTop:'10px'}}
                         >
-                            <Row>
+                            <Row style={{margin:'2px 0'}}>
                                 <Col xs={6} sm={6} md={4} style={{display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', borderRight:'1px solid #ececec'}}>
                                     <div>
                                         {moment(par.parfecha).format('DD/MM/YY')}

@@ -18,6 +18,11 @@ export const ValidateUserReducer = (tornid = null) => async (dispatch, getState)
 
     let response = false
 
+    const usutoken = localStorage.getItem('usutoken')
+    if(!usutoken){
+        return false
+    }
+
     await fetch(config.apiUrl + "auth/validate-user",
         {
             mode: "cors",
@@ -25,7 +30,7 @@ export const ValidateUserReducer = (tornid = null) => async (dispatch, getState)
             headers : {
                 "Accept": "application/json",
                 "Content-type":"application/json",
-                "usutoken" : localStorage.getItem('usutoken'),
+                "usutoken" :  usutoken,
                 "tornid" : tornid ? tornid : localStorage.getItem('tornid')
             },
         },

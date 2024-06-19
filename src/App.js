@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Home from './Routes/Home';
 import Navbar from './Components/Top/Navbar';
 import Statistics from './Routes/Statistics';
@@ -15,6 +15,7 @@ import PositionsUsers from './Routes/PositionsUsers';
 function App() {
 
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	const [ isAuth, setIsAuth ] = useState(false)
 	const location = useLocation();
@@ -25,10 +26,16 @@ function App() {
 
 	const getTournaments = async () => {
 		if (location.pathname !== '/login') {
-			const response = dispatch(ValidateUserReducer())
+			console.log("awui")
+
+			const response = await dispatch(ValidateUserReducer())
 			setIsAuth(response)
+			if(!response){
+				navigate('/login')
+			}
+		}else{
+			await dispatch(GetDataTournamentsReducer())
 		}
-		await dispatch(GetDataTournamentsReducer())
 	}
 
 	useEffect(()=>{
