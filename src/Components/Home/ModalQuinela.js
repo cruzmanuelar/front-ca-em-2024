@@ -47,6 +47,7 @@ const ModalQuinela = () => {
 							<Input
 								style={{width:'40px', textAlign:'center', border:'1px solid #592321'}}
 								onChange={(e) => dispatch(EditDataFormQuinelaReducer(e.target.value, mat.partid, 'goalhome'))}
+								disabled={mat.partid == 91}
 								defaultValue={
 									mat.goalhome 
 									? mat.goalhome
@@ -65,6 +66,7 @@ const ModalQuinela = () => {
 						<Col span={12} style={{display:'flex', alignItems:'center', gap:'10px'}}>
 							<Input 
 								style={{width:'40px', textAlign:'center', border:'1px solid #592321'}}
+								disabled={mat.partid == 91}
 								onChange={(e) => dispatch(EditDataFormQuinelaReducer(e.target.value, mat.partid, 'goalaway'))}
 								defaultValue={
 									mat.goalaway 
