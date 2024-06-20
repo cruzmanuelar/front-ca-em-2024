@@ -1,11 +1,15 @@
 import { Modal, Input, Row, Col, Button } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { EditDataFormQuinelaReducer, SendFormQuinelaReducer, ShowModalFormQuinelaReducer } from '../../Redux/Actions/Home/Home'
 import './../../Styles/Components/Home/ModalQuinela.css'
-import { ToastContainer } from "react-toastify";
+import {
+    LoadingOutlined
+} from '@ant-design/icons';
 
 const ModalQuinela = () => {
+
+	const [ sendingQuinela, setSendingQuinela ] = useState(false)
 
 	const {
         rex_show_modal_form_quinela,
@@ -22,6 +26,7 @@ const ModalQuinela = () => {
 	const sendQuinela = async () => {
 		const response = await dispatch(SendFormQuinelaReducer())
 		if(response){
+			setSendingQuinela(false)
 			closeModal()
 		}
 	}
@@ -82,7 +87,9 @@ const ModalQuinela = () => {
 
 			<div style={{display:'flex', justifyContent:'end', gap:'10px'}}>
 				<Button danger onClick={closeModal}>Cancelar</Button>
-				<Button onClick={sendQuinela} style={{backgroundColor:'#0958d9', color:'#FFFFFF'}}>Guardar</Button>
+				<Button onClick={sendQuinela} style={{backgroundColor:'#0958d9', color:'#FFFFFF', width:'90px'}}>
+				{ sendingQuinela ? <LoadingOutlined /> : 'Guardar'}
+				</Button>
 			</div>
 			{/* <ToastContainer /> */}
 		</Modal>

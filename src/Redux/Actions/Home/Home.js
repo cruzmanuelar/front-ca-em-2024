@@ -140,6 +140,14 @@ export const SendFormQuinelaReducer = ( ) => async (dispatch, getState) => {
 
     const dataEdited = rex_data_form_quinela.filter(dat => dat.edit == true)
 
+    const errorForm = dataEdited.find(dat => dat.goalaway == "" || dat.goalhome == "" || isNaN(dat.goalaway) == true|| isNaN(dat.goalhome == true)) 
+
+    if(errorForm){
+        console.log(errorForm)
+        notifyAlert("Solo se admiten valores numericos para los goles")
+        return false
+    }
+
     await fetch(config.apiUrl + "quinela/edit-quinela",
     {
         mode: "cors",
