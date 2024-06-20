@@ -68,15 +68,15 @@ const ModalMenu = () => {
                     }} className={`Button-Icon-Menu ${rex_data_user.tornombre}`}>
                             <CalendarOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
                     </Button>
-                    <Button onClick={()=> {
+                    {/* <Button onClick={()=> {
                            navigate('/statistics')
                            closeModal()
                         }} 
                         className={`Button-Icon-Menu ${rex_data_user.tornombre}`}
                     >
                             <BarChartOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
-                    </Button>
-                    <a href='https://ko-fi.com/codigopython' target='_blank'>
+                    </Button> */}
+                    {/* <a href='https://ko-fi.com/codigopython' target='_blank'>
                     <Button 
                         className={`Button-Icon-Menu ${rex_data_user.tornombre}`}
                     >
@@ -84,7 +84,7 @@ const ModalMenu = () => {
                                 <HeartOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
                             
                     </Button>
-                    </a>
+                    </a> */}
                     {/* <Button onClick={()=> {
                         let tornid = rex_data_user.tornid == 2 ? 1 : 2
                         closeModal()
