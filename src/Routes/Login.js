@@ -24,18 +24,19 @@ const Login = () => {
 		await dispatch(GetDataTournamentsReducer())
 	}
     const [ tournament, setTournament] = useState(null)
+    const [ user, setUser ] = useState(null)
     const [ formLogin, setFormLogin] = useState({
         tornid : 1,
         usuusuario : null,
-        usucontrasenia : null
+        usucontrasena : null
     })
 
-    const sendLogin = () => {
+    const sendLogin = async () => {
         const { response, message } = validateLogin(formLogin)
         if(!response){
             notifyAlert(message)
         }else{
-            const response = dispatch(AuthLoginReducer(formLogin))
+            const response = await dispatch(AuthLoginReducer(formLogin))
             if(response){
                 navigate('/')
             }
@@ -84,17 +85,98 @@ const Login = () => {
                 </div>
 
                 <div className='Container-Input'>
-                    <Input name='usuusuario' onChange={onChangeInput} placeholder="Usuario" />
+                    <Select
+                        placeholder='Seleccionar usuario'
+                        options={[
+                            {
+                                value:'Argenis',
+                                label :'Argenis'
+                            },
+                            {
+                                value:'Joaquin',
+                                label :'Joaquin'
+                            },
+                            {
+                                value:'Gerardo G.',
+                                label :'Gerardo G.'
+                            },
+                            {
+                                value:'David C.',
+                                label :'David C.'
+                            },
+                            {
+                                value:'Merlyn',
+                                label :'Merlyn'
+                            },
+                            {
+                                value:'Douglas',
+                                label :'Douglas'
+                            },
+
+
+
+
+
+                            {
+                                value:'Gabriel P.',
+                                label :'Gabriel P.'
+                            },
+                            {
+                                value:'Jose L.',
+                                label :'Jose L.'
+                            },
+                            {
+                                value:'Edwin S.',
+                                label :'Edwin S.'
+                            },
+                            {
+                                value:'Jorge G.',
+                                label :'Jorge G.'
+                            },
+                            {
+                                value:'Manuel C.',
+                                label :'Manuel C.'
+                            },
+                            {
+                                value:'Victor',
+                                label :'Victor'
+                            },
+
+
+
+
+
+
+                            {
+                                value:'Ralph',
+                                label :'Ralph'
+                            },
+                            {
+                                value:'Martin',
+                                label :'Martin'
+                            },
+                            {
+                                value:'Abel R.',
+                                label :'Abel R.'
+                            },
+                            {
+                                value:'Luis',
+                                label :'Luis'
+                            },
+                            {
+                                value:'Omar C.',
+                                label :'Omar C.'
+                            },
+                        ]}
+                        onChange={(value, index)=> setFormLogin({
+                            ...formLogin, usuusuario: value
+                        })}
+                    />
                     <Input.Password name='usucontrasena' onChange={onChangeInput} placeholder="Contrasena" />
 
                     <Button onClick={sendLogin} type="primary" htmlType="submit" block>
                         Ingresar
                     </Button>
-                </div>
-                <div className='Container-Redirect-Login'>
-                    <span onClick={()=>{
-                        navigate('/')
-                    }}>No tengo cuenta</span>
                 </div>
             </Col>
         </Row>
