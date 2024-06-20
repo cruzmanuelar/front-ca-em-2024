@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPositionsTournamentReducer } from '../Redux/Actions/Tournaments/Tournaments';
+import ImageLoading from '../Assets/images/loadingBall.gif'
 
 const Positions = () => {
 
@@ -196,59 +197,43 @@ const Positions = () => {
     },[])
 
     return (
-        <Row style={{display:'flex', alignItems:'center', justifyContent:'center', padding:'10px 10px'}}>
-            <Col span={24} md={12}>
-                {/* <div style={{display:'flex', justifyContent:'center'}}>
-                    <Segmented
-                        options={['Grupo A', 'Grupo B', 'Grupo C', 'Grupo D']}
-                        onChange={(value) => {
-                        console.log(value);
-                        }}
-                    />
-                </div> */}
-                {
-                    rex_data_positions_tournament.map(dat => (
-                        <div>
-                            <div style={{display:'flex', justifyContent:'center', margin:'15px 0', fontWeight:'600'}}>{dat.grunombre}</div>
-                            <Table
-                                className={`Table-Positions ${rex_data_user.tornombre == 'EM' ? 'Table-EM':''}`}
-                                columns={columns}
-                                dataSource={dat.data}
-                                pagination={{
-                                    position:['none','none']
-                                }}            
-                            />
+        <Row style={{display:'flex', alignItems:'center', justifyContent:'center', padding:'10px 10px 40px 10px'}}>
+            {
+                rex_data_positions_tournament.length > 0
+                ? <Col span={24} md={12}>
+                    {
+                        rex_data_positions_tournament.map(dat => (
+                            <div>
+                                <div style={{display:'flex', justifyContent:'center', margin:'15px 0', fontWeight:'600'}}>{dat.grunombre}</div>
+                                <Table
+                                    className={`Table-Positions ${rex_data_user.tornombre == 'EM' ? 'Table-EM':''}`}
+                                    columns={columns}
+                                    dataSource={dat.data}
+                                    pagination={{
+                                        position:['none','none']
+                                    }}            
+                                />
+                            </div>
+                        ))
+                    }
+                    {
+                        rex_data_user.tornombre == 'EM'
+                        ? <div className='Container-Info-Table-EM'>
+                            <div><div className='Icon-Direct-Classification'></div>Clasificado al mundial</div>
+                            <div><div className='Icon-Playoff-Classification'></div>Repechaje</div>
                         </div>
-                    ))
-                }
-                {/* <Table
-                    className={`Table-Positions ${rex_data_user.tornombre == 'EM' ? 'Table-EM':''}`}
-                    columns={columns}
-                    dataSource={rex_data_user.tornombre == 'CA' ? dataSourceCA : rex_data_positions_tournament }
-                    pagination={{
-                        position:['none','none']
-                    }}
-                    scroll={{
-                        x:300,
-                    }}
-                /> */}
-                {
-                    rex_data_user.tornombre == 'EM'
-                    ? <div className='Container-Info-Table-EM'>
-                        <div><div className='Icon-Direct-Classification'></div>Clasificado al mundial</div>
-                        <div><div className='Icon-Playoff-Classification'></div>Repechaje</div>
-                    </div>
-                    :  null
-                //     :  <div className='Container-Info-Table-EM'>
-
-                //     <div><div className='Icon-Direct-Classification'></div>Clasificado 4tos</div>
-                    
-                // </div>
-                
-                }
-                
-
-            </Col>
+                        :  null                
+                    }
+                </Col>
+                : <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', height:'90vh'}}>
+                    <img
+                        src={ImageLoading}
+                        width={200}
+                    />
+                    <div style={{fontSize:'20px'}}>Cargando...</div>
+                </div>
+            }
+            
         </Row>
     )
 }
