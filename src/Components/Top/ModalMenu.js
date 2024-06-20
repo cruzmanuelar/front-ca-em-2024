@@ -76,13 +76,15 @@ const ModalMenu = () => {
                     >
                             <BarChartOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
                     </Button>
+                    <a href='https://ko-fi.com/codigopython' target='_blank'>
                     <Button 
                         className={`Button-Icon-Menu ${rex_data_user.tornombre}`}
                     >
-                            <a href='https://ko-fi.com/codigopython' target='_blank'>
+                            
                                 <HeartOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
-                            </a>
+                            
                     </Button>
+                    </a>
                     {/* <Button onClick={()=> {
                         let tornid = rex_data_user.tornid == 2 ? 1 : 2
                         closeModal()
