@@ -8,6 +8,7 @@ import {
     LogoutOutlined,
     SwapOutlined,
     CalendarOutlined,
+    HeartOutlined,
     BarChartOutlined,
     OrderedListOutlined,
     TeamOutlined,
@@ -75,7 +76,14 @@ const ModalMenu = () => {
                     >
                             <BarChartOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
                     </Button>
-                    <Button onClick={()=> {
+                    <Button 
+                        className={`Button-Icon-Menu ${rex_data_user.tornombre}`}
+                    >
+                            <a href='https://ko-fi.com/codigopython' target='_blank'>
+                                <HeartOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
+                            </a>
+                    </Button>
+                    {/* <Button onClick={()=> {
                         let tornid = rex_data_user.tornid == 2 ? 1 : 2
                         closeModal()
                         dispatch(ValidateUserReducer(tornid))
@@ -87,7 +95,7 @@ const ModalMenu = () => {
                             src={rex_data_user.tornid == 1 
                                 ? 'https://res.cloudinary.com/josecruz9/image/upload/v1712456180/2026_FIFA_World_Cup_29_nngpit.png'
                                 :'https://res.cloudinary.com/josecruz9/image/upload/v1712373465/zrkbejv5skotj8ciafpo.png'}/>
-                    </Button>
+                    </Button> */}
                     <Button onClick={()=> {
                         navigate('/login')
                         dispatch(AuthLogoutReducer())

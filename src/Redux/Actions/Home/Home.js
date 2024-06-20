@@ -1,8 +1,11 @@
+import { notifyAlert, notifySuccess } from "../../../Functions/notifications";
 import config from "./../../../config"
 import { 
     DATA_FORM_QUINELA,
+    DATA_STATISTICS_FORM_QUINELA,
     GET_DATA_NEXT_MATCHES,
-    SHOW_MODAL_FORM_QUINELA
+    SHOW_MODAL_FORM_QUINELA,
+    SHOW_MODAL_STATISTICS_QUINELA
 } from "./../../../Constants/Home/Home"
 
 export const ShowModalFormQuinelaReducer = ( state ) => async (dispatch, getState) => {
@@ -22,6 +25,14 @@ export const ShowModalFormQuinelaReducer = ( state ) => async (dispatch, getStat
     })
 }
 
+export const ShowModalStatisticsQuinelaReducer = ( state ) => async (dispatch, getState) => {
+
+    dispatch({
+        type    : SHOW_MODAL_STATISTICS_QUINELA,
+        payload : state
+    })
+}
+
 export const EditDataFormQuinelaReducer = ( goals, id, name ) => async (dispatch, getState) => {
 
     const { rex_data_form_quinela } = getState().home;
@@ -32,8 +43,6 @@ export const EditDataFormQuinelaReducer = ( goals, id, name ) => async (dispatch
             mat['edit'] = true
         }
     })
-
-    console.log(rex_data_form_quinela)
 
     dispatch({
         type    : DATA_FORM_QUINELA,
@@ -85,36 +94,80 @@ export const GetDataNextMatchesReducer = (changeTor = false) => async (dispatch,
     })
 }
 
-export const SendFormQuinelaReducer = ( ) => async (dispatch, getState) => {
+export const GetDataStatisticsQuinelaReducer = ( ) => async (dispatch, getState) => {
+
+    let response = false
 
     const { rex_data_form_quinela } = getState().home;
 
     const dataEdited = rex_data_form_quinela.filter(dat => dat.edit == true)
 
-    console.log(dataEdited)
-    // await fetch(config.apiUrl + "quinela/edit-quinela",
-    // {
-    //     mode: "cors",
-    //     method : "POST",
-    //     headers : {
-    //         "Accept": "application/json",
-    //         "Content-type":"application/json",
-    //         "usutoken" : localStorage.getItem('usutoken'),
 
-    //     },
-    //     body : JSON.stringify({
-    //         formQuinela : dataEdited
-    //     })
-    // },
-    // )
-    // .then( res => res.json())
-    // .then(async data => {
-    //     if(data.response){
-    //         console.log("editado")
-    //         dispatch(GetDataNextMatchesReducer())
-    //     }
-    // })
-    // .catch((error) => {
-    //     console.log(error)
-    // })
+    await fetch(config.apiUrl + "quinela/statistics-quinela",
+    {
+        mode: "cors",
+        method : "POST",
+        headers : {
+            "Accept": "application/json",
+            "Content-type":"application/json",
+            "usutoken" : localStorage.getItem('usutoken'),
+
+        },
+    },
+    )
+    .then( res => res.json())
+    .then(async data => {
+        if(data.response){
+            response = true
+            dispatch({
+                type : DATA_STATISTICS_FORM_QUINELA,
+                payload : data.data
+            })
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+
+    return response
+}
+
+export const SendFormQuinelaReducer = ( ) => async (dispatch, getState) => {
+
+    let response = false
+
+    const { rex_data_form_quinela } = getState().home;
+
+    const dataEdited = rex_data_form_quinela.filter(dat => dat.edit == true)
+
+    await fetch(config.apiUrl + "quinela/edit-quinela",
+    {
+        mode: "cors",
+        method : "POST",
+        headers : {
+            "Accept": "application/json",
+            "Content-type":"application/json",
+            "usutoken" : localStorage.getItem('usutoken'),
+
+        },
+        body : JSON.stringify({
+            formQuinela : dataEdited
+        })
+    },
+    )
+    .then( res => res.json())
+    .then(async data => {
+        if(data.response){
+            response = true
+            dispatch(GetDataNextMatchesReducer())
+            notifySuccess(data.message)
+        }else{
+            notifyAlert(data.message)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+
+    return response
 }

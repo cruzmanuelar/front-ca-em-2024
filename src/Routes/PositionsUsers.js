@@ -1,4 +1,4 @@
-import { Col, Row, Table } from 'antd'
+import { Col, Row, Table, Typography } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { GetDataPositionsUsersReducer } from '../Redux/Actions/Users/Users'
@@ -6,6 +6,8 @@ import { GetDataPositionsUsersReducer } from '../Redux/Actions/Users/Users'
 const PositionsUsers = () => {
 
 	const dispatch = useDispatch()
+
+    const { Title } = Typography
 
 	const getRankingUsers = () => {
 		dispatch(GetDataPositionsUsersReducer())
@@ -31,7 +33,7 @@ const PositionsUsers = () => {
                 </div>
             },
             fixed : 'left',
-            width:'30px'
+            width:'25px'
         },
         {
             title: 'Usuario',
@@ -40,44 +42,51 @@ const PositionsUsers = () => {
             align: 'center',
             render : (_, record, index) => {
                 return <div style={{display:'flex', alignItems:'center'}}>
-                    <img
-                        width={30}
-                        height={30}
-                        src={record.usupais}
-                    />
                     <div>{record.user}</div>
                 </div>
             },
             fixed : 'left',
-            width:'70px'
+            width:'40px'
         },
         {
-            title: 'P.Goles',
+            title: 'PG',
             dataIndex: 'pgoals',
             key: 'pgoals',
             align: 'center',
-            width:'40px'
+            width:'20px',
+            render : (_, record) => {
+                return <div>{record._sum.puupuntosgoles}</div>
+            }
         },
         {
-            title: 'P.V',
-            dataIndex: 'pwins',
-            key: 'pwins',
+            title: 'PR',
+            dataIndex: 'presult',
+            key: 'presult',
             align: 'center',
-            width:'40px'
+            width:'20px',
+            render : (_, record) => {
+                return <div>{record._sum.puupuntosresultado}</div>
+            }
         },  
         {
-            title: 'Total',
-            dataIndex: 'total',
-            key: 'total',
+            title: 'PM',
+            dataIndex: 'pmarker',
+            key: 'pmarker',
             align: 'center',
-            width:'40px'
+            width:'20px',
+            render : (_, record) => {
+                return <div>{record._sum.puupuntosmarcador}</div>
+            }
         },
         {
-            title: '!!',
-            dataIndex: 'stats',
-            key: 'stats',
+            title: 'Ptos',
+            dataIndex: 'ptos',
+            key: 'ptos',
             align: 'center',
-            width:'40px'
+            width:'20px',
+            render : (_, record) => {
+                return <div>{record._sum.puupuntostotal}</div>
+            }
         },
     ];
 
@@ -86,14 +95,27 @@ const PositionsUsers = () => {
 	}, [])
 
 	return (
-		<Row style={{display:'flex', alignItems:'center', justifyContent:'center', padding:'20px 10px'}}>
+		<Row style={{display:'flex', alignItems:'center', justifyContent:'center', padding:'0px 10px'}}>
+            <Col span={24} style={{display:'flex', justifyContent:'center'}}>
+                <Title level={4}>Tabla de posiciones</Title>
+            </Col>
 			<Col span={24} md={12}>
-				<Table
-					className={`Table-Positions ${rex_data_user.tornombre == 'EM' ? 'Table-EM':''}`}
-					dataSource={rex_data_positions_users}
-					columns={columns}
-				/>
+                <Table
+                    className={`Table-Positions ${rex_data_user.tornombre == 'EM' ? 'Table-EM':''}`}
+                    columns={columns}
+                    dataSource={rex_data_positions_users}
+                    pagination={{
+                        position:['none','none']
+                    }}            
+                />
+
 			</Col>
+            <Col span={24} style={{marginTop:'20px'}}>
+                <div><b>PG:</b> Puntos por goles acertados</div>
+                <div><b>PR:</b> Puntos por resultado final acertado</div>
+                <div><b>PM:</b> Puntos por marcador final acertado</div>
+                <div><b>Ptos:</b> Puntos totales</div>
+            </Col>
 		</Row>
 	)
 }

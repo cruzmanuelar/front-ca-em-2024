@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { EditDataFormQuinelaReducer, SendFormQuinelaReducer, ShowModalFormQuinelaReducer } from '../../Redux/Actions/Home/Home'
 import './../../Styles/Components/Home/ModalQuinela.css'
+import { ToastContainer } from "react-toastify";
 
 const ModalQuinela = () => {
 
@@ -13,14 +14,16 @@ const ModalQuinela = () => {
     } = useSelector(({home}) => home)
 
 	const dispatch = useDispatch()
-	console.log(rex_data_form_quinela)
 
 	const closeModal = () => {
 		dispatch(ShowModalFormQuinelaReducer(false))
 	}
 
-	const sendQuinela = () => {
-		dispatch(SendFormQuinelaReducer())
+	const sendQuinela = async () => {
+		const response = await dispatch(SendFormQuinelaReducer())
+		if(response){
+			closeModal()
+		}
 	}
 
     return (
@@ -29,8 +32,6 @@ const ModalQuinela = () => {
 			footer={null}
 			onCancel={closeModal}
 			className='Modal-Form-Quinela'
-			// className={`Modal-Matches-Calendar ${rex_data_user?.tornombre}`}
-			// style={{display:'flex', flexWrap:'wrap', width:'100%'}}
 			closeIcon={false}
 		>
 			<div style={{ display:'flex', justifyContent:'center'}}>Formulario Quinela</div>
@@ -41,7 +42,7 @@ const ModalQuinela = () => {
 							<Input
 								style={{width:'40px', textAlign:'center', border:'1px solid #592321'}}
 								onChange={(e) => dispatch(EditDataFormQuinelaReducer(e.target.value, mat.partid, 'goalhome'))}
-								value={
+								defaultValue={
 									mat.goalhome 
 									? mat.goalhome
 									: mat.pru
@@ -60,7 +61,7 @@ const ModalQuinela = () => {
 							<Input 
 								style={{width:'40px', textAlign:'center', border:'1px solid #592321'}}
 								onChange={(e) => dispatch(EditDataFormQuinelaReducer(e.target.value, mat.partid, 'goalaway'))}
-								value={
+								defaultValue={
 									mat.goalaway 
 									? mat.goalaway
 									: mat.pru
@@ -83,6 +84,7 @@ const ModalQuinela = () => {
 				<Button danger onClick={closeModal}>Cancelar</Button>
 				<Button onClick={sendQuinela} style={{backgroundColor:'#0958d9', color:'#FFFFFF'}}>Guardar</Button>
 			</div>
+			{/* <ToastContainer /> */}
 		</Modal>
     )
 }

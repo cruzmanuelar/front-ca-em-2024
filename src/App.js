@@ -26,7 +26,6 @@ function App() {
 
 	const getTournaments = async () => {
 		if (location.pathname !== '/login') {
-			console.log("awui")
 
 			const response = await dispatch(ValidateUserReducer())
 			setIsAuth(response)

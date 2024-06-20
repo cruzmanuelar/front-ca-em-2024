@@ -6,10 +6,11 @@ import {
 } from '@ant-design/icons';
 
 import { useDispatch, useSelector } from "react-redux";
-import { GetDataNextMatchesReducer, ShowModalFormQuinelaReducer } from "../Redux/Actions/Home/Home";
+import { GetDataNextMatchesReducer, GetDataStatisticsQuinelaReducer, ShowModalFormQuinelaReducer, ShowModalStatisticsQuinelaReducer } from "../Redux/Actions/Home/Home";
 import './../Styles/Routes/Home.css'
 import moment from "moment";
 import ModalQuinela from "../Components/Home/ModalQuinela";
+import ModalStatistics from "../Components/Home/ModalStatistics";
 
 function Home() {
 
@@ -27,6 +28,7 @@ function Home() {
 
     const getNextMatches = async () => {
         await dispatch(GetDataNextMatchesReducer())
+        await dispatch(GetDataStatisticsQuinelaReducer())
     }
 
     useEffect(() => {
@@ -71,9 +73,11 @@ function Home() {
                                             </div>
                                         </Col>
                                         <Col xs={4} sm={4} md={4} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                            <div>
-                                                <div>{par.pargoleslocal != null ? par.pargoleslocal : '-'}</div>
-                                                <div>{par.pargolesvisita != null ? par.pargolesvisita : '-'}</div>
+                                            <div style={{display:'flex', gap:'5px', flexDirection:'column'}}>
+                                                <div>{par.pru ? par.pru.prugoleslocal : '-'}</div>
+                                                <div>{par.pru ? par.pru.prugolesvisita : '-'}</div>
+                                                {/* <div>{par.pargoleslocal != null ? par.pargoleslocal : '-'}</div>
+                                                <div>{par.pargolesvisita != null ? par.pargolesvisita : '-'}</div> */}
                                             </div>
                                         </Col>
                                     </Row>
@@ -95,11 +99,16 @@ function Home() {
                         </Button>
                     </Affix>
                     <Affix offsetBottom={10}>
-                        <Button block style={{backgroundColor:'#0958d9', color:'#FFFFFF'}}><BarChartOutlined />Pronosticos</Button>
+                        <Button 
+                            onClick={()=> dispatch(ShowModalStatisticsQuinelaReducer(true))}
+                            block 
+                            style={{backgroundColor:'#0958d9', color:'#FFFFFF'}}
+                        ><BarChartOutlined />Otras Quinelas</Button>
                     </Affix>
                 </div>
             </Col>
             <ModalQuinela/>
+            <ModalStatistics/>
         </Row>
     );
 }

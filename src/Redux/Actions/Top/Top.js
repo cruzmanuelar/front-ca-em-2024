@@ -38,7 +38,6 @@ export const ValidateUserReducer = (tornid = null) => async (dispatch, getState)
     .then( res => res.json())
     .then(async data => {
         if(data.response){
-            console.log(data.data)
             dispatch({
                 type : GET_DATA_USER,
                 payload : data.data
@@ -86,7 +85,6 @@ export const AuthLoginReducer = (data) => async (dispatch, getState) =>{
                 type : GET_DATA_USER,
                 payload : data.data
             })
-            console.log(data.data)
             localStorage.setItem('usutoken', data.data.usutoken)
             localStorage.setItem('tornid', data.data.tornid)
             localStorage.setItem('tornombre', data.data.tornombre)

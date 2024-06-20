@@ -31,12 +31,10 @@ const Login = () => {
     })
 
     const sendLogin = () => {
-        console.log(formLogin)
         const { response, message } = validateLogin(formLogin)
         if(!response){
             notifyAlert(message)
         }else{
-            console.log("Va a login reducer")
             const response = dispatch(AuthLoginReducer(formLogin))
             if(response){
                 navigate('/')
@@ -78,7 +76,7 @@ const Login = () => {
                 </div>
                 <div>
                 <Select
-                    value={1}
+                    value={'Copa America 2024'}
                     placeholder='Seleccionar torneo'
                     options={rex_data_tournaments}
                     onChange={(text, index)=> onChangeSelect(index)}

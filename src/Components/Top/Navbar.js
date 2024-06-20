@@ -17,7 +17,7 @@ const Navbar = () => {
     } = useSelector(({top}) => top)
 
     return (
-        <div onClick={()=> console.log(rex_data_user)} className={`Container-Navbar ${rex_data_user.tornombre}`}>
+        <div className={`Container-Navbar ${rex_data_user.tornombre}`}>
             <div>La quinela de la bondad</div>
             <Tooltip 
                 placement="rightBottom" 

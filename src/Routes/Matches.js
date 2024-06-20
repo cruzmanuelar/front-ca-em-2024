@@ -34,10 +34,12 @@ const Matches = () => {
 	};
 
 	const getMatches = async () => {
+		dispatch(ShowDateMatchReducer('Jornada 1'))
 		await dispatch(GetDataMatchesReducer())
 	}
 
 	useEffect(() => {
+		setShowGroup("Grupo A")
 		getMatches()
 	}, [])
 

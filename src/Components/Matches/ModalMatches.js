@@ -13,7 +13,6 @@ const ModalMatches = ({ onChange, showModal, setShowModal }) => {
         rex_data_user,
     } = useSelector(({top}) => top)
 
-    console.log(rex_data_user)
     return (
         <Modal
             open={showModal}

@@ -13,7 +13,6 @@ const MatchesCA = () => {
 			<Segmented
 				options={rex_data_matches.map(mat => mat.fecnombre)}
 				onChange={(value) => {
-				console.log(value); // string
 				}}
 			/>
 		</div>
