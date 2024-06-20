@@ -147,7 +147,10 @@ const Login = () => {
                                 value:'Victor',
                                 label :'Victor'
                             },
-
+                            {
+                                value:'Marcelo',
+                                label :'Marcelo'
+                            },
 
 
 
