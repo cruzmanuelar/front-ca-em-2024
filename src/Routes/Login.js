@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { validateLogin } from '../Functions/helpers/validateLogin';
 import { notifyAlert } from '../Functions/notifications';
 import { AuthLoginReducer } from '../Redux/Actions/Top/Top';
+import {
+    LoadingOutlined
+} from '@ant-design/icons';
 
 const Login = () => {
 
@@ -25,6 +28,7 @@ const Login = () => {
 	}
     const [ tournament, setTournament] = useState(null)
     const [ user, setUser ] = useState(null)
+    const [ loadingLogin, setLoadingLogin] = useState(false)
     const [ formLogin, setFormLogin] = useState({
         tornid : 1,
         usuusuario : null,
@@ -32,15 +36,17 @@ const Login = () => {
     })
 
     const sendLogin = async () => {
+        setLoadingLogin(true)
         const { response, message } = validateLogin(formLogin)
         if(!response){
             notifyAlert(message)
         }else{
             const response = await dispatch(AuthLoginReducer(formLogin))
-            if(response){
+            if(response){                
                 navigate('/')
             }
         }
+        setLoadingLogin(false)
     }
 
     const onChangeInput = (e) => {
@@ -175,7 +181,7 @@ const Login = () => {
                     <Input.Password name='usucontrasena' onChange={onChangeInput} placeholder="Contrasena" />
 
                     <Button onClick={sendLogin} type="primary" htmlType="submit" block>
-                        Ingresar
+                        {loadingLogin ? <LoadingOutlined /> : 'Ingresar'}
                     </Button>
                 </div>
             </Col>
