@@ -1,7 +1,7 @@
 import { Modal, Input, Row, Col, Button } from 'antd'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { EditDataFormQuinelaReducer, SendFormQuinelaReducer, ShowModalFormQuinelaReducer } from '../../Redux/Actions/Home/Home'
+import { EditDataFormQuinelaReducer, GetDataNextMatchesReducer, SendFormQuinelaReducer, ShowModalFormQuinelaReducer } from '../../Redux/Actions/Home/Home'
 import './../../Styles/Components/Home/ModalQuinela.css'
 import {
     LoadingOutlined
@@ -10,6 +10,7 @@ import {
 const ModalQuinela = () => {
 
 	const [ sendingQuinela, setSendingQuinela ] = useState(false)
+	const [ loadingInput, setLoadingInput ] = useState(false)
 
 	const {
         rex_show_modal_form_quinela,
@@ -25,9 +26,12 @@ const ModalQuinela = () => {
 
 	const sendQuinela = async () => {
 		const response = await dispatch(SendFormQuinelaReducer())
+		setSendingQuinela(false)
+		closeModal()
 		if(response){
-			setSendingQuinela(false)
-			closeModal()
+			setLoadingInput(true)
+			const responseQuinela = await dispatch(GetDataNextMatchesReducer()) 
+			setLoadingInput(false)
 		}
 	}
 
@@ -44,10 +48,13 @@ const ModalQuinela = () => {
 				rex_data_form_quinela.map((mat, index) => (
 					<Row key={index} gutter={[12,12]} style={{display:'flex', margin:'10px 0'}}>
 						<Col span={12} style={{display:'flex', flexDirection:'row-reverse', alignItems:'center', gap:'10px'}}>
+							{/* <div style={{width:'40px', display:'flex', justifyContent:'center'}}>
+								<LoadingOutlined/>
+							</div> */}
 							<Input
 								style={{width:'40px', textAlign:'center', border:'1px solid #592321'}}
 								onChange={(e) => dispatch(EditDataFormQuinelaReducer(e.target.value, mat.partid, 'goalhome'))}
-								disabled={mat.partid == 91 || mat.partid == 92 }
+								disabled={mat.parbloqueado}
 								defaultValue={
 									mat.goalhome 
 									? mat.goalhome
@@ -66,7 +73,7 @@ const ModalQuinela = () => {
 						<Col span={12} style={{display:'flex', alignItems:'center', gap:'10px'}}>
 							<Input 
 								style={{width:'40px', textAlign:'center', border:'1px solid #592321'}}
-								disabled={mat.partid == 91 || mat.partid == 92}
+								disabled={mat.parbloqueado}
 								onChange={(e) => dispatch(EditDataFormQuinelaReducer(e.target.value, mat.partid, 'goalaway'))}
 								defaultValue={
 									mat.goalaway 

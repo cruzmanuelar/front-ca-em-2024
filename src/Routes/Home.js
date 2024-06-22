@@ -2,7 +2,8 @@ import { Button, Col, Row, Typography, Divider, Affix } from "antd";
 import { useEffect, useState } from "react";
 import {
     BarChartOutlined,
-    FormOutlined
+    FormOutlined,
+    LoadingOutlined
 } from '@ant-design/icons';
 
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +17,7 @@ import ImageLoading from '../Assets/images/loadingBall.gif'
 function Home() {
 
     const [ quinelaDone, setQuinelaDone ] = useState(false)
+    const [ loadingData, setLoadingData ] = useState(false)
 
     const {
         rex_data_next_matches,
@@ -28,7 +30,9 @@ function Home() {
     const { Title } = Typography
 
     const getNextMatches = async () => {
-        await dispatch(GetDataNextMatchesReducer())
+        setLoadingData(true)
+        const response = await dispatch(GetDataNextMatchesReducer())
+        setLoadingData(false)
         await dispatch(GetDataStatisticsQuinelaReducer())
     }
 
@@ -78,9 +82,13 @@ function Home() {
                                                         </div>
                                                     </Col>
                                                     <Col xs={4} sm={4} md={4} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                                        <div style={{display:'flex', gap:'5px', flexDirection:'column'}}>
-                                                            <div>{par.pru ? par.pru.prugoleslocal : '-'}</div>
-                                                            <div>{par.pru ? par.pru.prugolesvisita : '-'}</div>
+                                                        <div style={{display:'flex', gap:'5px', flexDirection:'column', justifyContent:"center"}}>
+                                                            <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                                                {loadingData ? <LoadingOutlined/> : par.pru ? par.pru.prugoleslocal : '-'}
+                                                            </div>
+                                                            <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                                                {loadingData ? <LoadingOutlined/> : par.pru ? par.pru.prugolesvisita : '-'}
+                                                            </div>
                                                         </div>
                                                     </Col>
                                                 </Row>

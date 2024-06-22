@@ -49,16 +49,6 @@ const PositionsUsers = () => {
             width:'40px'
         },
         {
-            title: 'PG',
-            dataIndex: 'pgoals',
-            key: 'pgoals',
-            align: 'center',
-            width:'20px',
-            render : (_, record) => {
-                return <div>{record._sum.puupuntosgoles}</div>
-            }
-        },
-        {
             title: 'PR',
             dataIndex: 'presult',
             key: 'presult',
@@ -68,6 +58,16 @@ const PositionsUsers = () => {
                 return <div>{record._sum.puupuntosresultado}</div>
             }
         },  
+        {
+            title: 'PG',
+            dataIndex: 'pgoals',
+            key: 'pgoals',
+            align: 'center',
+            width:'20px',
+            render : (_, record) => {
+                return <div>{record._sum.puupuntosgoles}</div>
+            }
+        },
         {
             title: 'PM',
             dataIndex: 'pmarker',
@@ -104,16 +104,18 @@ const PositionsUsers = () => {
                     className={`Table-Positions ${rex_data_user.tornombre == 'EM' ? 'Table-EM':''}`}
                     columns={columns}
                     dataSource={rex_data_positions_users}
+                    p
                     pagination={{
-                        position:['none','none']
-                    }}            
+                        position:['none','none'],
+                        pageSize : 20 
+                    }}
                 />
 
 			</Col>
             <Col span={24} style={{marginTop:'20px'}}>
-                <div><b>PG:</b> Puntos por goles acertados</div>
-                <div><b>PR:</b> Puntos por resultado final acertado</div>
-                <div><b>PM:</b> Puntos por marcador final acertado</div>
+                <div><b>PR:</b> Puntos por resultado final acertado (+3)</div>
+                <div><b>PM:</b> Puntos por marcador final acertado (+2)</div>
+                <div><b>PG:</b> Puntos por goles acertados (+1)</div>
                 <div><b>Ptos:</b> Puntos totales</div>
             </Col>
 		</Row>

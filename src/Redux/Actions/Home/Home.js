@@ -167,7 +167,6 @@ export const SendFormQuinelaReducer = ( ) => async (dispatch, getState) => {
     .then(async data => {
         if(data.response){
             response = true
-            dispatch(GetDataNextMatchesReducer())
             notifySuccess(data.message)
         }else{
             notifyAlert(data.message)
