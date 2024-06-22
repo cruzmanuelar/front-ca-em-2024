@@ -27,8 +27,8 @@ const ModalQuinela = () => {
 	const sendQuinela = async () => {
 		const response = await dispatch(SendFormQuinelaReducer())
 		setSendingQuinela(false)
-		closeModal()
 		if(response){
+			closeModal()
 			setLoadingInput(true)
 			const responseQuinela = await dispatch(GetDataNextMatchesReducer()) 
 			setLoadingInput(false)

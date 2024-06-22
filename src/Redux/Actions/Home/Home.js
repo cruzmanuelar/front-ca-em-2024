@@ -135,12 +135,21 @@ export const GetDataStatisticsQuinelaReducer = ( ) => async (dispatch, getState)
 export const SendFormQuinelaReducer = ( ) => async (dispatch, getState) => {
 
     let response = false
+    let errorForm = false
 
     const { rex_data_form_quinela } = getState().home;
 
     const dataEdited = rex_data_form_quinela.filter(dat => dat.edit == true)
 
-    const errorForm = dataEdited.find(dat => dat.goalaway == "" || dat.goalhome == "" || isNaN(dat.goalaway) == true|| isNaN(dat.goalhome == true)) 
+    console.log(dataEdited)
+    for (let dat of dataEdited) {
+        if (("goalhome" in dat && (isNaN(dat.goalhome) || dat.goalhome == "")) 
+            || ("goalaway" in dat && (isNaN(dat.goalaway) || dat.goalaway == "") )) {
+            errorForm = true
+            console.log(dat)
+            break;
+        }
+    }
 
     if(errorForm){
         console.log(errorForm)
