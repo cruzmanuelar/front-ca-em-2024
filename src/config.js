@@ -1,4 +1,4 @@
 export default {
-    apiUrl : "http://147.182.178.218:3001/",
+    apiUrl : "https://back-ca-2024.onrender.com",
     // apiUrl: "http://localhost:3001/"
 }
