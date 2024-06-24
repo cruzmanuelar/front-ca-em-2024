@@ -69,7 +69,7 @@ function Home() {
                                                                     height={30}
                                                                     src={par.parlocalsel.selimagen}
                                                                 />
-                                                                <div>{par.parlocalsel.selnombre}</div>
+                                                                <div>{par.parlocalsel.selnombre}{par.parfinalizado ? ` (${par.pargoleslocal})` : null}</div>
                                                             </div>
                                                             <div style={{display:'flex', alignItems:'center'}}>
                                                                 <img
@@ -77,7 +77,7 @@ function Home() {
                                                                     height={30}
                                                                     src={par.parvisitasel.selimagen}
                                                                 />
-                                                                <div>{par.parvisitasel.selnombre}</div>
+                                                                <div>{par.parvisitasel.selnombre}{par.parfinalizado ? ` (${par.pargolesvisita})` : null}</div>
                                                             </div>
                                                         </div>
                                                     </Col>

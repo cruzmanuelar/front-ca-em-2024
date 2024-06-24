@@ -4,6 +4,7 @@ import Navbar from './Components/Top/Navbar';
 import Statistics from './Routes/Statistics';
 import Matches from './Routes/Matches';
 import Login from './Routes/Login';
+import CloseMatch from './Components/Admin/CloseMatch';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
@@ -56,6 +57,7 @@ function App() {
 							<Route path="/statistics" element={<Statistics />} />
 							<Route path="/matches" element={<Matches />} />
 							<Route path="/users" element={<PositionsUsers />} />
+							<Route path="/close-match" element={<CloseMatch />} />
 						</Routes>
 					</>
 

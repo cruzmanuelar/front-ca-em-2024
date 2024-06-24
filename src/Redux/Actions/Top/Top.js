@@ -88,6 +88,7 @@ export const AuthLoginReducer = (data) => async (dispatch, getState) =>{
             localStorage.setItem('usutoken', data.data.usutoken)
             localStorage.setItem('tornid', data.data.tornid)
             localStorage.setItem('tornombre', data.data.tornombre)
+            localStorage.setItem('usuusuario', data.data.usuusuario)
             response = true
         }else{
             notifyAlert(data.message)

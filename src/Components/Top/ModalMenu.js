@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import '././../../Styles/Components/Top/ModalMenu.css'
 import {
 	UserOutlined,
-    SettingOutlined,
     LogoutOutlined,
     SwapOutlined,
     CalendarOutlined,
@@ -12,6 +11,7 @@ import {
     BarChartOutlined,
     OrderedListOutlined,
     TeamOutlined,
+    SettingOutlined,
     HomeOutlined
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,6 +61,17 @@ const ModalMenu = () => {
                     }} className={`Button-Icon-Menu ${rex_data_user.tornombre}`}>
                             <TeamOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
                     </Button>
+                    {
+                        localStorage.getItem('usuusuario') == 'Manuel C.'
+                        ? <Button onClick={()=> {
+                            navigate('/close-match')
+                            closeModal()
+                        }} className={`Button-Icon-Menu ${rex_data_user.tornombre}`}>
+                                <SettingOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
+                        </Button>
+                        : null
+                    }
+                    
                     <Button onClick={()=> {
                         navigate('/matches')
                         closeModal()
