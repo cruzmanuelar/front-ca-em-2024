@@ -61,16 +61,12 @@ const ModalMenu = () => {
                     }} className={`Button-Icon-Menu ${rex_data_user.tornombre}`}>
                             <TeamOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
                     </Button>
-                    {
-                        localStorage.getItem('usuusuario') == 'Manuel C.'
-                        ? <Button onClick={()=> {
-                                navigate('/game-prediction')
-                                closeModal()
-                            }} className={`Button-Icon-Menu ${rex_data_user.tornombre}`}>
-                                    <PlayCircleOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
-                        </Button>
-                        : null
-                    }
+                    <Button onClick={()=> {
+                        navigate('/game-prediction')
+                            closeModal()
+                        }} className={`Button-Icon-Menu ${rex_data_user.tornombre}`}>
+                        <PlayCircleOutlined className={`Icon-Menu ${rex_data_user.tornombre}`}/>
+                    </Button>
                     {
                         localStorage.getItem('usuusuario') == 'Manuel C.'
                         ? <Button onClick={()=> {

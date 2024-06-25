@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 
 import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
@@ -10,12 +10,18 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Table, Row, Col } from 'antd';
+import { Table, Row, Col, FloatButton, Button } from 'antd';
+import {
+	PartitionOutlined
+} from '@ant-design/icons';
+import ModalPlayOff from "./ModalPlayOff";
+import './../../Styles/Components/Games/PredictMatches.css'
 
 const columns = [
 	{
 		title: 'Grupo A',
 		dataIndex: 'name',
+		align: 'center',
 		render : (_, record, index) => {
 			return <div style={{display:'flex', alignItems:'center', gap:'5px', touchAction:'none'}}>
 				<img
@@ -33,6 +39,7 @@ const columnsB = [
 	{
 		title: 'Grupo B',
 		dataIndex: 'name',
+		align: 'center',
 		render : (_, record, index) => {
 			return <div style={{display:'flex', alignItems:'center', gap:'5px', touchAction:'none'}}>
 				<img
@@ -50,6 +57,7 @@ const columnsC = [
 	{
 		title: 'Grupo C',
 		dataIndex: 'name',
+		align: 'center',
 		render : (_, record, index) => {
 			return <div style={{display:'flex', alignItems:'center', gap:'5px', touchAction:'none'}}>
 				<img
@@ -67,6 +75,7 @@ const columnsD = [
 	{
 		title: 'Grupo D',
 		dataIndex: 'name',
+		align: 'center',
 		render : (_, record, index) => {
 			return <div style={{display:'flex', alignItems:'center', gap:'5px', touchAction:'none'}}>
 				<img
@@ -100,6 +109,8 @@ const RowSort = (props) => {
 };
 
 const PredictMatches = () => {
+
+	const [ openModalPlayOff, setOpenModalPlayOff ] = useState(false)
 
 	const [dataSource, setDataSource] = useState([
 		{
@@ -251,11 +262,15 @@ const PredictMatches = () => {
 		  });
 		}
 		console.log(over)
+		console.log(active)
 	};
 
 	return (
-		<Row>
-			<Col span={12}>
+		<Row style={{display:'flex', justifyContent:'center', padding:'5px', alignItems:'center'}}>
+			<Col span={24} style={{margin:'10px 0', padding:'0 15px'}}>
+				<div><PartitionOutlined /> Cambia la posicion de los equipos para generar los cruces de 4tos de final</div>
+			</Col>
+			<Col span={12} style={{padding:'5px'}}>
 				<DndContext sensors={sensors} modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
 				<SortableContext
 					// rowKey array
@@ -263,6 +278,7 @@ const PredictMatches = () => {
 					strategy={verticalListSortingStrategy}
 				>
 					<Table
+						className="Table-Prediction-Matches"
 						components={{
 							body: {
 							row: RowSort,
@@ -278,7 +294,7 @@ const PredictMatches = () => {
 				</SortableContext>
 				</DndContext>
 			</Col>
-			<Col span={12}>
+			<Col span={12} style={{padding:'5px'}}>
 				<DndContext sensors={sensors} modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEndB}>
 				<SortableContext
 					// rowKey array
@@ -286,6 +302,7 @@ const PredictMatches = () => {
 					strategy={verticalListSortingStrategy}
 				>
 					<Table
+						className="Table-Prediction-Matches"
 						components={{
 							body: {
 							row: RowSort,
@@ -302,7 +319,7 @@ const PredictMatches = () => {
 				</DndContext>
 			</Col>
 
-			<Col span={12}>
+			<Col span={12} style={{padding:'5px'}}>
 				<DndContext sensors={sensors} modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEndC}>
 				<SortableContext
 					// rowKey array
@@ -310,6 +327,7 @@ const PredictMatches = () => {
 					strategy={verticalListSortingStrategy}
 				>
 					<Table
+						className="Table-Prediction-Matches"
 						components={{
 							body: {
 							row: RowSort,
@@ -326,7 +344,7 @@ const PredictMatches = () => {
 				</DndContext>
 			</Col>
 
-			<Col span={12}>
+			<Col span={12} style={{padding:'5px'}}>
 				<DndContext sensors={sensors} modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEndD}>
 				<SortableContext
 					// rowKey array
@@ -334,6 +352,7 @@ const PredictMatches = () => {
 					strategy={verticalListSortingStrategy}
 				>
 					<Table
+						className="Table-Prediction-Matches"
 						components={{
 							body: {
 							row: RowSort,
@@ -349,6 +368,20 @@ const PredictMatches = () => {
 				</SortableContext>
 				</DndContext>
 			</Col>
+			<FloatButton
+				onClick={() => setOpenModalPlayOff(true)}
+				tooltip={<div>Ver cruces</div>} 
+				type="primary"
+				icon={<PartitionOutlined />}
+			/>
+			<ModalPlayOff
+				openModalPlayOff={openModalPlayOff}
+				setOpenModalPlayOff={setOpenModalPlayOff}
+				dataSource={dataSource}
+				groupB={groupB}
+				groupC={groupC}
+				groupD={groupD}
+			/>
 		</Row>
 	);
 };
