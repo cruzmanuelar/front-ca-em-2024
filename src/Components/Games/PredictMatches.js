@@ -29,7 +29,7 @@ const columns = [
 					height={25}
 					src={record.image}
 				/>
-				<div>{record.name}</div>
+				<div style={{whiteSpace:'nowrap', textOverflow:'ellipsis', overflow:'hidden'}}>{record.name}</div>
 			</div>
 		},
 	},
@@ -47,7 +47,7 @@ const columnsB = [
 					height={25}
 					src={record.image}
 				/>
-				<div>{record.name}</div>
+				<div style={{whiteSpace:'nowrap', textOverflow:'ellipsis', overflow:'hidden'}}>{record.name}</div>
 			</div>
 		},
 	},
@@ -65,7 +65,7 @@ const columnsC = [
 					height={25}
 					src={record.image}
 				/>
-				<div>{record.name}</div>
+				<div style={{whiteSpace:'nowrap', textOverflow:'ellipsis', overflow:'hidden'}}>{record.name}</div>
 			</div>
 		},
 	},
@@ -83,7 +83,7 @@ const columnsD = [
 					height={25}
 					src={record.image}
 				/>
-				<div>{record.name}</div>
+				<div style={{whiteSpace:'nowrap', textOverflow:'ellipsis', overflow:'hidden'}}>{record.name}</div>
 			</div>
 		},
 	},
