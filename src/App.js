@@ -12,6 +12,7 @@ import { GetDataTournamentsReducer } from './Redux/Actions/Tournaments/Tournamen
 import { ValidateUserReducer } from './Redux/Actions/Top/Top';
 import Positions from './Routes/Positions';
 import PositionsUsers from './Routes/PositionsUsers';
+import PredictMatches from './Components/Games/PredictMatches';
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
 							<Route path="/statistics" element={<Statistics />} />
 							<Route path="/matches" element={<Matches />} />
 							<Route path="/users" element={<PositionsUsers />} />
+							<Route path="/game-prediction" element={<PredictMatches />} />
 							<Route path="/close-match" element={<CloseMatch />} />
 						</Routes>
 					</>
