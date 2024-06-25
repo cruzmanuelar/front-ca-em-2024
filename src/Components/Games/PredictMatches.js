@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from "react";
 
-import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import {
   arrayMove,
   SortableContext,
+  sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
@@ -16,7 +17,7 @@ const columns = [
 		title: 'Grupo A',
 		dataIndex: 'name',
 		render : (_, record, index) => {
-			return <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
+			return <div style={{display:'flex', alignItems:'center', gap:'5px', touchAction:'none'}}>
 				<img
 					width={25}
 					height={25}
@@ -33,7 +34,7 @@ const columnsB = [
 		title: 'Grupo B',
 		dataIndex: 'name',
 		render : (_, record, index) => {
-			return <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
+			return <div style={{display:'flex', alignItems:'center', gap:'5px', touchAction:'none'}}>
 				<img
 					width={25}
 					height={25}
@@ -50,7 +51,7 @@ const columnsC = [
 		title: 'Grupo C',
 		dataIndex: 'name',
 		render : (_, record, index) => {
-			return <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
+			return <div style={{display:'flex', alignItems:'center', gap:'5px', touchAction:'none'}}>
 				<img
 					width={25}
 					height={25}
@@ -67,7 +68,7 @@ const columnsD = [
 		title: 'Grupo D',
 		dataIndex: 'name',
 		render : (_, record, index) => {
-			return <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
+			return <div style={{display:'flex', alignItems:'center', gap:'5px', touchAction:'none'}}>
 				<img
 					width={25}
 					height={25}
@@ -197,6 +198,15 @@ const PredictMatches = () => {
 		  	activationConstraint: {
 				distance: 1,
 			},
+		}),
+		useSensor(TouchSensor, {
+			activationConstraint: {
+			  delay: 300,
+			  tolerance: 8,
+			},
+		}),
+		useSensor(KeyboardSensor, {
+			coordinateGetter: sortableKeyboardCoordinates,
 		}),
 	);
 	const onDragEnd = ({ active, over }) => {
