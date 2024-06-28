@@ -2,6 +2,11 @@ import { Col, Row, Table, Typography } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { GetDataPositionsUsersReducer } from '../Redux/Actions/Users/Users'
+import {
+    CaretUpOutlined,
+    CaretDownOutlined,
+	MinusOutlined
+} from '@ant-design/icons';
 
 const PositionsUsers = () => {
 
@@ -42,7 +47,15 @@ const PositionsUsers = () => {
             align: 'center',
             render : (_, record, index) => {
                 return <div style={{display:'flex', alignItems:'center'}}>
-                    <div>{record.user}</div>
+                    <div>
+                        {
+                            index + 1 < record.prevPos
+                            ? <CaretUpOutlined style={{color:'green'}} />
+                            : index + 1 > record.prevPos
+                                ? <CaretDownOutlined style={{color:'red'}}/>
+                                : <MinusOutlined /> 
+                        }
+                        <span style={{marginLeft:'3px'}}>{record.user}</span></div>
                 </div>
             },
             fixed : 'left',
