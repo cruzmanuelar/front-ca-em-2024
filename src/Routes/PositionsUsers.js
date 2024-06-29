@@ -1,16 +1,19 @@
 import { Col, Row, Table, Typography } from 'antd'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { GetDataPositionsUsersReducer } from '../Redux/Actions/Users/Users'
+import { GetDataPositionsUsersReducer, GetDataQuinelaUserReducer } from '../Redux/Actions/Users/Users'
 import {
     CaretUpOutlined,
     CaretDownOutlined,
 	MinusOutlined
 } from '@ant-design/icons';
+import ModalHistoricalQuinela from '../Components/Users/ModalHistoricalQuinela';
 
 const PositionsUsers = () => {
 
 	const dispatch = useDispatch()
+
+    const [ showModalHistorical, setShowModalHistorial ] = useState(false)
 
     const { Title } = Typography
 
@@ -115,6 +118,14 @@ const PositionsUsers = () => {
 			<Col span={24} md={12}>
                 <Table
                     className={`Table-Positions ${rex_data_user.tornombre == 'EM' ? 'Table-EM':''}`}
+                    onRow={(record, rowIndex) => {
+                        return {
+                            onClick: () => {
+                                setShowModalHistorial(true)
+                                dispatch(GetDataQuinelaUserReducer(record.usuid))
+                            },
+                        };
+                    }}
                     columns={columns}
                     dataSource={rex_data_positions_users}
                     p
@@ -131,6 +142,10 @@ const PositionsUsers = () => {
                 <div><b>PG:</b> Puntos por goles acertados (+1)</div>
                 <div><b>Ptos:</b> Puntos totales</div>
             </Col>
+            <ModalHistoricalQuinela
+                showModalHistorical={showModalHistorical}
+                setShowModalHistorial={setShowModalHistorial}
+            />
 		</Row>
 	)
 }
